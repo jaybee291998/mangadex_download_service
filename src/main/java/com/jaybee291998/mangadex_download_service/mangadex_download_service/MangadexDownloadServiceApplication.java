@@ -32,15 +32,13 @@ public class MangadexDownloadServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String mangaId = "0cb24b09-3885-4bbe-a2e6-d567e7db2d90";
-		VolumeResultModel resultModel = volumeService.getVolume(mangaId);
-		String outputPath = "C:/Users/63956/Documents/project/outputDir";
-		String chapterName = "chapter_1";
-		System.out.println(resultModel);
-		resultModel.getResult();
-		String chapterId = resultModel.getVolumes().get("1").getChapters().get("1").getId();
-		volumeDownloadService.downloadVolume(mangaId, "1", outputPath, true);
-//		chapterDownloaderService.downloadChapter(chapterId, chapterName, outputPath);
-		ChapterMediaResultModel chapterMediaResultModel = chapterMediaService.getChapterMedia(chapterId);
+		if(args.length < 4) {
+			return;
+		}
+		String mangaId = args[0];
+		String volumeNumber = args[1];
+		String outputPath = args[2];
+		boolean separateChapterFolder = args[3].equalsIgnoreCase("Y");
+		volumeDownloadService.downloadVolume(mangaId, volumeNumber, outputPath, separateChapterFolder);
 	}
 }
