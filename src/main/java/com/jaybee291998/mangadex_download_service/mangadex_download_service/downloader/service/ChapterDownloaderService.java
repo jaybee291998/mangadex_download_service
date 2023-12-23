@@ -21,12 +21,20 @@ public class ChapterDownloaderService {
     private ChapterMediaService chapterMediaService;
 
     public void downloadChapter(String chapterId, String chapterName, String outputPath) throws IOException {
+        downloadChapter(chapterId, chapterName, outputPath, true);
+    }
+
+    public void downloadChapter(String chapterId, String chapterName, String outputPath, boolean seperateFolder) throws IOException {
         ChapterMediaResultModel chapterMediaResultModel = chapterMediaService.getChapterMedia(chapterId);
         String baseUrl = chapterMediaResultModel.getBaseUrl() + "/data-saver";
         ChapterMediaModel chapterMediaModel = chapterMediaResultModel.getChapter();
         String hash = chapterMediaModel.getHash();
         String[] dataSaverPanel = chapterMediaModel.getDataSaver();
-        String basePath = outputPath + "/" + chapterName;
+        String basePath = outputPath;
+        if(seperateFolder) {
+            basePath += "/" + chapterName;
+        }
+
         Files.createDirectories(Paths.get(basePath));
         for(int i = 0; i < dataSaverPanel.length; i++) {
             String panelName = dataSaverPanel[i];
@@ -36,7 +44,7 @@ public class ChapterDownloaderService {
             }
             String imageType = split[1];
             String finalUrl = baseUrl + "/" + hash + "/" + panelName;
-            String outputFile = basePath + "/" + i + "." + imageType;
+            String outputFile = basePath + "/" + chapterName + "_" + i + "." + imageType;
             try {
                 downloadPanel(finalUrl, outputFile);
             } catch (IOException e) {
