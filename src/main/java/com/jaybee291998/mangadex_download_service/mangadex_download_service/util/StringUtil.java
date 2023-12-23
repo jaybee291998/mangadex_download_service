@@ -3,7 +3,7 @@ package com.jaybee291998.mangadex_download_service.mangadex_download_service.uti
 public class StringUtil {
     public static String padLeft(String input, int targetLenght, char padChar) {
         if(input.length() > targetLenght) {
-            throw new IllegalArgumentException("you've done goof");
+            throw new IllegalArgumentException("you've done goof." + " input: " + input + ", targetLen: " + targetLenght);
         }
         int numberOfCharToPad = targetLenght - input.length();
 
