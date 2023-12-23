@@ -3,6 +3,7 @@ package com.jaybee291998.mangadex_download_service.mangadex_download_service.dow
 import com.jaybee291998.mangadex_download_service.mangadex_download_service.api.model.ChapterMediaModel;
 import com.jaybee291998.mangadex_download_service.mangadex_download_service.api.model.ChapterMediaResultModel;
 import com.jaybee291998.mangadex_download_service.mangadex_download_service.api.service.ChapterMediaService;
+import com.jaybee291998.mangadex_download_service.mangadex_download_service.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +45,7 @@ public class ChapterDownloaderService {
             }
             String imageType = split[1];
             String finalUrl = baseUrl + "/" + hash + "/" + panelName;
-            String outputFile = basePath + "/" + chapterName + "_" + i + "." + imageType;
+            String outputFile = basePath + "/" + chapterName + "_" + StringUtil.padLeft(i+"", 3, '0') + "." + imageType;
             try {
                 downloadPanel(finalUrl, outputFile);
             } catch (IOException e) {

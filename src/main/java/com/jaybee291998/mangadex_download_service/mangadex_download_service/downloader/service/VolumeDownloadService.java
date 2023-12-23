@@ -4,6 +4,7 @@ import com.jaybee291998.mangadex_download_service.mangadex_download_service.api.
 import com.jaybee291998.mangadex_download_service.mangadex_download_service.api.model.VolumeModel;
 import com.jaybee291998.mangadex_download_service.mangadex_download_service.api.model.VolumeResultModel;
 import com.jaybee291998.mangadex_download_service.mangadex_download_service.api.service.VolumeService;
+import com.jaybee291998.mangadex_download_service.mangadex_download_service.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +26,12 @@ public class VolumeDownloadService {
             throw new IllegalAccessException("No such volume: " + volumeNumber);
         }
         Map<String, ChapterModel> chapters = volumeModel.getChapters();
-        String basePath = outputPath + "/volume_" + volumeNumber;
+        String basePath = outputPath + "/volume_" + StringUtil.padLeft(volumeNumber, 2, '0');
         chapters.keySet().forEach(key -> {
             ChapterModel chapter = chapters.get(key);
             String chapterId = chapter.getId();
             try {
-                chapterDownloaderService.downloadChapter(chapterId, "chapter_" + key, basePath, seperateChapterFolder);
+                chapterDownloaderService.downloadChapter(chapterId, "chapter_" + StringUtil.padLeft(key, 2, '0'), basePath, seperateChapterFolder);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
