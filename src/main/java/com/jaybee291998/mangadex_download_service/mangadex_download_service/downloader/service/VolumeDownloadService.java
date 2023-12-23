@@ -26,12 +26,12 @@ public class VolumeDownloadService {
             throw new IllegalAccessException("No such volume: " + volumeNumber);
         }
         Map<String, ChapterModel> chapters = volumeModel.getChapters();
-        String basePath = outputPath + "/volume_" + StringUtil.padLeft(volumeNumber, 3, '0');
+        String basePath = outputPath + "/volume_" + StringUtil.padLeft(volumeNumber, 2, '0');
         chapters.keySet().forEach(key -> {
             ChapterModel chapter = chapters.get(key);
             String chapterId = chapter.getId();
             try {
-                chapterDownloaderService.downloadChapter(chapterId, "chapter_" + StringUtil.padLeft(key, 3, '0'), basePath, seperateChapterFolder);
+                chapterDownloaderService.downloadChapter(chapterId, "chapter_" + StringUtil.padLeft(key, 4, '0'), basePath, seperateChapterFolder);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
