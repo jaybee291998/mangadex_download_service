@@ -31,7 +31,7 @@ public class VolumeDownloadService {
             ChapterModel chapter = chapters.get(key);
             String chapterId = chapter.getId();
             try {
-                chapterDownloaderService.downloadChapter(chapterId, "chapter_" + StringUtil.padLeft(key, 2, '0'), basePath, seperateChapterFolder);
+                chapterDownloaderService.downloadChapter(chapterId, "chapter_" + StringUtil.padLeft(key, 3, '0'), basePath, seperateChapterFolder);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
