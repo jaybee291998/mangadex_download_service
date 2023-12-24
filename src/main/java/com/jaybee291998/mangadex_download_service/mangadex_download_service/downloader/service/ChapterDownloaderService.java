@@ -45,6 +45,7 @@ public class ChapterDownloaderService {
             }
             String imageType = split[1];
             String finalUrl = baseUrl + "/" + hash + "/" + panelName;
+            // specific panel name
             String outputFile = basePath + "/" + chapterName + "_" + StringUtil.padLeft(i+"", 3, '0') + "." + imageType;
             try {
                 downloadPanel(finalUrl, outputFile);

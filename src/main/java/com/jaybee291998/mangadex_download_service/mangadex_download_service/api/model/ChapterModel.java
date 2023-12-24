@@ -18,4 +18,8 @@ public class ChapterModel {
     public String toString() {
         return "ChapterModel{id: " + this.id + ", chapter: " + this.chapter + ", count: " + this.count + "}";
     }
+
+    public double getChapterAsDouble() {
+        return Double.parseDouble(chapter);
+    }
 }

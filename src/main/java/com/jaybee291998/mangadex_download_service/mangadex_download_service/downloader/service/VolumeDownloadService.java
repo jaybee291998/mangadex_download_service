@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -25,16 +28,23 @@ public class VolumeDownloadService {
         if(volumeModel == null) {
             throw new IllegalAccessException("No such volume: " + volumeNumber);
         }
-        Map<String, ChapterModel> chapters = volumeModel.getChapters();
+        Map<String, ChapterModel> chaptersMap = volumeModel.getChapters();
+        List<ChapterModel> chapters = new ArrayList<>();
+        chaptersMap.keySet().forEach(chapterNumer -> {
+            chapters.add(chaptersMap.get(chapterNumer));
+        });
+        chapters.sort(Comparator.comparingDouble(ChapterModel::getChapterAsDouble));
+        // volume folder name
         String basePath = outputPath + "/volume_" + StringUtil.padLeft(volumeNumber, 2, '0');
-        chapters.keySet().forEach(key -> {
-            ChapterModel chapter = chapters.get(key);
-            String chapterId = chapter.getId();
+        for(int i = 0; i < chapters.size(); i++) {
+            ChapterModel chapterModel = chapters.get(i);
+            String chapterId = chapterModel.getId();
             try {
-                chapterDownloaderService.downloadChapter(chapterId, "chapter_" + StringUtil.padLeft(key, 4, '0'), basePath, seperateChapterFolder);
+                // chapter folder name
+                chapterDownloaderService.downloadChapter(chapterId, "chapter_" + StringUtil.padLeft(i+"", 4, '0'), basePath, seperateChapterFolder);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        });
+        }
     }
 }
