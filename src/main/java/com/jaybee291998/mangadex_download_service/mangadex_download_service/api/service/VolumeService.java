@@ -14,7 +14,7 @@ public class VolumeService {
         this.volumeClient = volumeClient;
     }
 
-    public VolumeResultModel getVolume(String mangaID) {
-        return volumeClient.getVolume(mangaID);
+    public VolumeResultModel getVolume(String mangaID, String language) {
+        return volumeClient.getVolume(mangaID, language);
     }
 }

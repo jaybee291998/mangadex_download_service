@@ -39,6 +39,6 @@ public class MangadexDownloadServiceApplication implements CommandLineRunner {
 		String volumeNumber = args[1];
 		String outputPath = args[2];
 		boolean separateChapterFolder = args[3].equalsIgnoreCase("Y");
-		volumeDownloadService.downloadVolume(mangaId, volumeNumber, outputPath, separateChapterFolder);
+		volumeDownloadService.downloadVolume(mangaId, volumeNumber, outputPath, separateChapterFolder, "en");
 	}
 }

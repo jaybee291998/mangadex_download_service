@@ -21,8 +21,8 @@ public class VolumeDownloadService {
     @Autowired
     private VolumeService volumeService;
 
-    public void downloadVolume(String mangaId, String volumeNumber, String outputPath, boolean seperateChapterFolder) throws IllegalAccessException {
-        VolumeResultModel volumeResultModel = volumeService.getVolume(mangaId);
+    public void downloadVolume(String mangaId, String volumeNumber, String outputPath, boolean seperateChapterFolder, String language) throws IllegalAccessException {
+        VolumeResultModel volumeResultModel = volumeService.getVolume(mangaId, language);
         VolumeModel volumeModel = volumeResultModel.getVolumes().containsKey(volumeNumber) ?
                 volumeResultModel.getVolumes().get(volumeNumber) : null;
         if(volumeModel == null) {
